@@ -1,0 +1,35 @@
+{
+  "name": "@shpaw415/next-login",
+  "version": "0.0.1",
+  "description": "manage login and session for next with server-action",
+  "main": "index.ts",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shpaw415/next-login.git"
+  },
+  "dependencies": {
+    "jsonwebtoken": "9.0.2",
+    "@types/jsonwebtoken": "9.0.5",
+    "next": "^14.0.3",
+    "react": "^18.2.0",
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/react": "^18"
+  },
+  "keywords": [
+    "next-login",
+    "next-session",
+    "next-server-action"
+  ],
+  "author": "justin halle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shpaw415/next-login/issues"
+  },
+  "homepage": "https://github.com/shpaw415/next-login#readme"
+}
