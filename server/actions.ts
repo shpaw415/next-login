@@ -6,7 +6,7 @@ type credsType = {
   onerror: () => unknown;
 };
 
-export async function credentialsLogin<T>({
+async function credentialsLogin<T>({
   loginCallback,
   onerror,
 }: {

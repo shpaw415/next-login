@@ -2,11 +2,11 @@
 import { sign, verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-export default async function JWT() {
+export async function JWT() {
   class JWT {
     static cookie_name = "session_token";
 
-    private static createToken(data: object) {
+    static createToken(data: object) {
       return sign(data, process.env.JWT_SECRET as string);
     }
     public static exists() {
@@ -23,7 +23,7 @@ export default async function JWT() {
     public static deleteToken() {
       cookies().delete(this.cookie_name);
     }
-    private static decode() {
+    static decode() {
       const cookie = cookies().get(this.cookie_name)?.value;
       if (!cookie) return {};
       const decoded = verify(cookie, process.env.JWT_SECRET as string);
