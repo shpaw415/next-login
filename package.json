@@ -1,6 +1,6 @@
 {
   "name": "@shpaw415/next-login",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "manage login and session for next with server-action",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
