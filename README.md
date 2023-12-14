@@ -11,46 +11,60 @@
 2. in server.ts
 
 ```TypeScript
-	"use server";
-	import { credentialsLogin } from "@shpaw415/next-login/server/actions"
-	export async function handleLogin({
-		username,
-		password
-	}: {
-		username:string;
-		password:string;
-	}) {
-		"use server";
-		const loginFunction = await credentialsLogin<{
-		username:string,
-		password: string;
-		}>({
-			loginCallback: async (data) => {
-				// data is {username, password}
-				if(login === failed) return null;
-				else if(login === success) {
-					return {
-						/* data to store in the token accessed in session */
-					};
-				}
-			}
-		})
-		return  await  loginFunction({ username: username, password: password });
-	}
+"use server";
+import { credentialsLogin } from "@shpaw415/next-login";
+
+async function logOpts() {
+  return await credentialsLogin<{
+    username: string;
+    password: string;
+  }>({
+    loginCallback: async (data) => {
+      return { username: data.username };
+    },
+  });
+}
+
+export const Login = async (data: { username: string; password: string }) =>
+  (await logOpts()).login(data);
+
+export const Logout = async () => (await logOpts()).logout();
+
+export const getSession = async () => (await logOpts()).getSession();
+
+
 ```
 
 3. in client.ts
 
 ```TypeScript
-	import { handleLogin } from "server";
+import { handleLogin, getSessionData, Logout } from "./server";
+import { useSession } from "@shpaw415/next-login";
 
-	// in a server action of your choice
-	async function makeLogin() {
-		const loginStatus = await handleLogin({
+export default ReactElement() {
+	const session = useSession(false);
+	const serverAction_makeLogin = async () => {
+		const logopts
+		const loginStatus = await LogOpts({
 			username: "JohnDoe",
 			password: "Pa33w0rd"
 		});
-		if(!loginStatus) //login did not work
-		else // Login successful
+		if(!loginStatus) { /*login did not work...*/ }
+		else {
+			/*Login Success*/
+			session.setSessionData(await getSessionData());
+		}
+	};
+	const serverAction_logout = async () => {
+		await Logout();
+		session.logout();
 	}
+}
 ```
+
+## Feature Docs
+
+### useSession
+
+- Every React-Components using: useSession(true)
+  will be reRendered with the call of method ( session.setStatus(), session.setSessionData() or session.logout() )

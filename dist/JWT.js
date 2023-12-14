@@ -1,18 +1,18 @@
 "use server";
 import { sign, verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
-export async function JWT() {
+export default async function JWT() {
+    if (!process.env.JWT_SECRET)
+        throw new Error("Please set < JWT_SECRET > as env variable");
     class JWT {
-        static cookie_name = "session_token";
-        static createToken(data) {
-            if (!process.env.JWT_SECRET)
-                throw new Error("Please set < JWT_SECRET > as env variable");
+        cookie_name = "session_token";
+        createToken(data) {
             return sign(data, process.env.JWT_SECRET);
         }
-        static exists() {
+        exists() {
             return cookies().get(this.cookie_name) ? true : false;
         }
-        static setToken({ data }) {
+        setToken({ data }) {
             cookies().set({
                 name: this.cookie_name,
                 value: this.createToken(data),
@@ -20,10 +20,10 @@ export async function JWT() {
                 path: "/",
             });
         }
-        static deleteToken() {
+        deleteToken() {
             cookies().delete(this.cookie_name);
         }
-        static decode() {
+        decode() {
             const cookie = cookies().get(this.cookie_name)?.value;
             if (!cookie)
                 return {};
@@ -32,18 +32,18 @@ export async function JWT() {
                 return {};
             return decoded;
         }
-        static isLoged() {
+        isLoged() {
             return cookies().get(this.cookie_name) ? true : false;
         }
-        static getAll() {
+        getAll() {
             const val = this.decode();
             return val ? val : {};
         }
-        static get(name) {
+        get(name) {
             const val = this.decode();
             const cookie = val ? val : {};
             return typeof cookie != "string" ? cookie[name] : {};
         }
     }
-    return JWT;
+    return new JWT();
 }

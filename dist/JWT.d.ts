@@ -1,5 +1,4 @@
-export declare function JWT(): Promise<{
-    new (): {};
+export default function JWT(): Promise<{
     cookie_name: string;
     createToken(data: object): string;
     exists(): boolean;

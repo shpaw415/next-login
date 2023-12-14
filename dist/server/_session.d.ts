@@ -1,7 +1,7 @@
-export declare function credentialsLogin<T>({ loginCallback, onerror, }: {
-    loginCallback: (data: T) => Promise<null | object>;
-    onerror?: (data: T) => Promise<null | object>;
-}): Promise<{
+interface __makeLogStructure {
+    loginCallback: (data: any) => Promise<null | object | true>;
+}
+export declare function _makeLogStructure<T>({ loginCallback }: __makeLogStructure): {
     login: (data: T) => Promise<true | object | null>;
     logout: () => Promise<void>;
     getSession: () => Promise<{
@@ -11,4 +11,5 @@ export declare function credentialsLogin<T>({ loginCallback, onerror, }: {
         data: T;
         status: boolean;
     }>;
-}>;
+};
+export {};

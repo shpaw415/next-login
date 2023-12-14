@@ -1,15 +1,13 @@
-"use server";
-import { JWT } from "../JWT";
+import JWT from "../JWT";
+import { _makeLogStructure } from "./_session";
 export async function credentialsLogin({ loginCallback, onerror, }) {
-    return async (data) => {
-        const user = await loginCallback(data);
-        if (!user)
-            return onerror ? await onerror(data) : undefined;
-        (await JWT()).setToken({ data: data });
-        return true;
-    };
-}
-export async function logout() {
-    (await JWT()).deleteToken();
-    return;
+    return _makeLogStructure({
+        loginCallback: async (data) => {
+            const user = await loginCallback(data);
+            if (!user)
+                return onerror ? await onerror(data) : null;
+            (await JWT()).setToken({ data: data });
+            return true;
+        },
+    });
 }
