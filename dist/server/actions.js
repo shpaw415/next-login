@@ -6,7 +6,7 @@ export async function credentialsLogin({ loginCallback, onerror, }) {
             const user = await loginCallback(data);
             if (!user)
                 return onerror ? await onerror(data) : null;
-            (await JWT()).setToken({ data: data });
+            (await JWT()).setToken({ data: user });
             return true;
         },
     });

@@ -1,15 +1,16 @@
 interface __makeLogStructure {
     loginCallback: (data: any) => Promise<null | object | true>;
 }
-export declare function _makeLogStructure<T>({ loginCallback }: __makeLogStructure): {
+export declare function _makeLogStructure<T, Session>({ loginCallback, }: __makeLogStructure): {
     login: (data: T) => Promise<true | object | null>;
     logout: () => Promise<void>;
     getSession: () => Promise<{
-        status: boolean;
-        data?: undefined;
+        status: true;
+        data: Session;
     } | {
-        data: T;
-        status: boolean;
+        status: false;
+        data: {};
     }>;
+    updateSession: (data: Session) => Promise<void>;
 };
 export {};

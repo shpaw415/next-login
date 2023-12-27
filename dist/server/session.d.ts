@@ -1,8 +1,9 @@
 export declare function getSession<T>(): Promise<{
-    status: boolean;
-    data?: undefined;
-} | {
+    status: true;
     data: T;
-    status: boolean;
+} | {
+    status: false;
+    data: {};
 }>;
 export declare function createSession(data: object): Promise<void>;
+export declare function updateSession(data: object): Promise<void>;

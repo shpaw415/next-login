@@ -6,7 +6,7 @@ declare class Session {
     setSessionData(data: {
         [key: string]: unknown;
     }): this;
-    getSession(): {};
+    getSession<T>(): T;
     setstatus(value: boolean): void;
     logout(): void;
     /**

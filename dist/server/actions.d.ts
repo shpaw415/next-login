@@ -1,14 +1,15 @@
-export declare function credentialsLogin<T>({ loginCallback, onerror, }: {
-    loginCallback: (data: T) => Promise<null | object>;
+export declare function credentialsLogin<T, Session>({ loginCallback, onerror, }: {
+    loginCallback: (data: T) => Promise<null | Session>;
     onerror?: (data: T) => Promise<null | object>;
 }): Promise<{
     login: (data: T) => Promise<true | object | null>;
     logout: () => Promise<void>;
     getSession: () => Promise<{
-        status: boolean;
-        data?: undefined;
+        status: true;
+        data: Session;
     } | {
-        data: T;
-        status: boolean;
+        status: false;
+        data: {};
     }>;
+    updateSession: (data: Session) => Promise<void>;
 }>;

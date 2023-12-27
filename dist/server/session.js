@@ -1,19 +1,28 @@
 import JWT from "../JWT";
 export async function getSession() {
+    let response = {
+        status: false,
+        data: {},
+    };
     try {
         const token = await JWT();
         if (!token.isLoged())
-            return { status: false };
+            return response;
         let data = token.getAll();
         if (typeof data == "string")
             data = JSON.parse(data);
-        return { data: data, status: true };
+        response.status = true;
+        response.data = data;
     }
     catch (e) {
-        return { status: false };
+        response.status = false;
     }
+    return response;
 }
 export async function createSession(data) {
     const token = await JWT();
     token.setToken({ data: { status: true, ...data } });
+}
+export async function updateSession(data) {
+    await createSession(data);
 }
